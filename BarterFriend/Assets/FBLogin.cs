@@ -34,6 +34,7 @@ public class FBLogin : MonoBehaviour {
 	
 	private void AuthCallback (ILoginResult result) {
 		if (FB.IsLoggedIn) {
+			Debug.Log ("logged in");
 			// AccessToken class will have session details
 			var aToken = Facebook.Unity.AccessToken.CurrentAccessToken;
 			// Print current access token's User ID
