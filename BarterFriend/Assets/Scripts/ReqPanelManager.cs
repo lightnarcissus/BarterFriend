@@ -13,7 +13,7 @@ public class ReqPanelManager : MonoBehaviour {
 	
 	}
 
-	public static void ChangeDetails()
+	public void SendRequest(string reqTitle, int reqOptions, string reqDesc, bool needCall, bool needPerson, bool needVideo, bool needText, bool onlyFriends)
 	{
 		
 	}

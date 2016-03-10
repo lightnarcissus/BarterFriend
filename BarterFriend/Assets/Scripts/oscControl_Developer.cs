@@ -69,6 +69,7 @@ public class oscControl_Developer : MonoBehaviour {
 				float tempVal = float.Parse (item.Value.packets [lastPacketIndex].Data [0].ToString ());
 				string tempString = item.Value.packets [lastPacketIndex].Data [0].ToString ();
 				int tempInt = int.Parse (item.Value.packets [lastPacketIndex].Data [0].ToString ());
+				Debug.Log("Message received "+tempString);
 				if (item.Value.packets[lastPacketIndex].Address == "/ReqTitle")
 				{
 					requestTitle = tempString;
@@ -116,6 +117,9 @@ public class oscControl_Developer : MonoBehaviour {
 					else
 						friendsOnly = true;
 				}
+
+				GameObject tempObj = GameObject.Find ("Req1");
+				tempObj.GetComponent<ReqPanelManager> ().SendRequest (requestTitle, requestOptions, requestDesc, hasCall, hasPerson, hasVideo, hasText, friendsOnly);
 
 			}
 		}
