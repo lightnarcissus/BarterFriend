@@ -29,13 +29,16 @@ using UnityEngine.UI;
 public class oscControl_Developer : MonoBehaviour {
 	
 	private Dictionary<string, ServerLog> servers;
-	public GameObject cube;
-	public GameObject[] gameplaySet;
-	public GameObject[] visualSet;
-	public GameObject[] envSet;
-	public GameObject[] enemySet;
-	public GameObject[] youSet;
-	public GameObject metascoreLine;
+
+
+	public string requestTitle;
+	public int requestOptions;
+	public string requestDesc;
+	public bool hasCall;
+	public bool hasPerson;
+	public bool hasVideo;
+	public bool hasText;
+	public bool friendsOnly;
 	private float boolVal=0f;
 	// Script initialization
 	void Start() {	
@@ -64,12 +67,74 @@ public class oscControl_Developer : MonoBehaviour {
 //				                                    item.Value.packets[lastPacketIndex].Data[0].ToString())); //First data value
 
 				float tempVal = float.Parse (item.Value.packets [lastPacketIndex].Data [0].ToString ());
-
-				if (item.Value.packets[lastPacketIndex].Address == "/Dev/Metascore") //gameplay
+				string tempString = item.Value.packets [lastPacketIndex].Data [0].ToString ();
+				int tempInt = int.Parse (item.Value.packets [lastPacketIndex].Data [0].ToString ());
+				if (item.Value.packets[lastPacketIndex].Address == "/ReqTitle")
 				{
-					
+					requestTitle = tempString;
 				}
+				else if (item.Value.packets[lastPacketIndex].Address == "/ReqDesc")
+				{
+					requestDesc= tempString;
+				}
+				else if (item.Value.packets[lastPacketIndex].Address == "/ReqOptions")
+				{
+					requestOptions = tempInt;
+				}
+				else if (item.Value.packets[lastPacketIndex].Address == "/NeedCall")
+				{
+					if (tempVal == 0)
+						hasCall = false;
+					else
+						hasCall = true;
+				}
+				else if (item.Value.packets[lastPacketIndex].Address == "/NeedPerson")
+				{
+					if (tempVal == 0)
+						hasPerson = false;
+					else
+						hasPerson= true;
+				}
+				else if (item.Value.packets[lastPacketIndex].Address == "/NeedVideo")
+				{
+					if (tempVal == 0)
+						hasVideo = false;
+					else
+						hasVideo = true;
+				}
+				else if (item.Value.packets[lastPacketIndex].Address == "/NeedText")
+				{
+					if (tempVal == 0)
+						hasText = false;
+					else
+						hasText = true;
+				}
+				else if (item.Value.packets[lastPacketIndex].Address == "/OnlyFriends")
+				{
+					if (tempVal == 0)
+						friendsOnly = false;
+					else
+						friendsOnly = true;
+				}
+
 			}
 		}
+	}
+	public static void SendRequest(string reqTitle, int reqOptions, string reqDesc, bool needCall, bool needPerson, bool needVideo, bool needText, bool onlyFriends)
+	{
+		OSCHandler_Developer.Instance.SendMessageToClient ("Max", "/ReqTitle", reqTitle);
+		OSCHandler_Developer.Instance.SendMessageToClient ("Max", "/ReqOptions", reqOptions);
+		OSCHandler_Developer.Instance.SendMessageToClient ("Max", "/ReqDesc", reqDesc);
+		OSCHandler_Developer.Instance.SendMessageToClient ("Max", "/NeedCall", needCall);
+		OSCHandler_Developer.Instance.SendMessageToClient ("Max", "/NeedPerson", needPerson);
+		OSCHandler_Developer.Instance.SendMessageToClient ("Max", "/NeedVideo", needVideo);
+		OSCHandler_Developer.Instance.SendMessageToClient ("Max", "/NeedText", needText);
+		OSCHandler_Developer.Instance.SendMessageToClient ("Max", "/OnlyFriends", onlyFriends);
+	}
+
+	public void MakeRequest()
+	{
+		gameObject.transform.FindChild ("Title").gameObject.GetComponent<Text> ().text = requestTitle;
+		gameObject.transform.FindChild ("Description").gameObject.GetComponent<Text> ().text = requestDesc;
 	}
 }

@@ -97,11 +97,13 @@ public class OSCHandler_Developer : MonoBehaviour
 		Debug.Log ("TIED TO: " + ListIP.ipAddress);
 		if (ListIP.ipAddress == null) {
 
-			ListIP.ipAddress = "172.16.11.89";
-			ListIP.otherIPAddress = "182.16.12.69";
+			ListIP.ipAddress = "127.0.0.1";
+			ListIP.otherIPAddress = "127.0.0.1";
 		}
-			CreateClient("Max", IPAddress.Parse(ListIP.ipAddress), 8000);
-		CreateClient ("Critic", IPAddress.Parse (ListIP.otherIPAddress), 8000);
+
+		CreateClient("Max", IPAddress.Parse(ListIP.ipAddress), 8001);
+			//CreateClient("Max", IPAddress.Parse(ListIP.ipAddress), 8000);
+		//CreateClient ("Critic", IPAddress.Parse (ListIP.otherIPAddress), 8000);
         //Initialize OSC servers (listeners)
         //Example:
 

@@ -8,7 +8,7 @@ public class RequestState:MonoBehaviour {
 	public WWW www;
 	public GameObject quad;
 	void Start() {
-		StartCoroutine(GetText());
+		//StartCoroutine(GetText());
 		//www=new WWW("http://lightnarcissus.com/wp-content/uploads/2015/10/trialogue_paintitblack-1024x573.png");
 	}
 
@@ -16,6 +16,11 @@ public class RequestState:MonoBehaviour {
 	{
 	//	quad.GetComponent<Renderer> ().material.mainTexture = www.texture;
 		//Debug.Log (www.text);
+	}
+
+	public static void ReceiveRequest()
+	{
+		
 	}
 	
 	IEnumerator GetText() {

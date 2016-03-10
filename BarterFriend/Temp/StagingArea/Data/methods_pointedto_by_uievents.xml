@@ -1,0 +1,18 @@
+<linker>
+	<assembly fullname="Assembly-CSharp">
+		<type fullname="ListIP">
+			<method name="OnEnterApp"/>
+		</type>
+		<type fullname="LoginManager">
+			<method name="LoginUser"/>
+			<method name="RegisterUser"/>
+			<method name="MakeUserRegister"/>
+		</type>
+		<type fullname="RequestFeed">
+			<method name="RequestPage"/>
+		</type>
+		<type fullname="RequestPageManager">
+			<method name="SubmitRequest"/>
+		</type>
+	</assembly>
+</linker>
