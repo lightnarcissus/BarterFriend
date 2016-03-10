@@ -1,10 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.IO;
+using UnityEngine.Experimental.Networking;
 public class LoginManager : MonoBehaviour {
 
 	public GameObject loginPage;
 	public GameObject registerPage; 
+
+	private UnityWebRequest registerDetails;
+	private UnityWebRequest loginDetails;
 
 	//login page
 	public InputField loginUsername;
@@ -14,7 +19,7 @@ public class LoginManager : MonoBehaviour {
 	public InputField registerEmail;
 	public InputField registerUsername;
 	public InputField registerPassword;
-
+	public string screenShotURL= "http://lightnarcissus.com/projects/barterfriend/cgi-bin/upload.cgitrangecreatures/cgi-bin/upload.cgi";
 	private int loginState = 0;
 
 	// Use this for initialization
@@ -49,4 +54,22 @@ public class LoginManager : MonoBehaviour {
 		loginPage.SetActive (true);
 		registerPage.SetActive (false);
 	}
+
+	IEnumerator UploadNewUser() {
+		WWWForm form = new WWWForm();
+		form.AddField ("Email", registerEmail.text);
+		form.AddField("Username", registerUsername.text);
+		form.AddField ("Password", registerPassword.text);
+
+		UnityWebRequest www = UnityWebRequest.Post("http://lightnarcissus.com/upload", form);
+		yield return www.Send();
+
+		if(www.isError) {
+			Debug.Log(www.error);
+		}
+		else {
+			Debug.Log("Form upload complete!");
+		}
+	}
+
 }
