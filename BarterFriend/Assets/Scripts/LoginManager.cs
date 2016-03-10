@@ -19,6 +19,7 @@ public class LoginManager : MonoBehaviour {
 	public InputField registerEmail;
 	public InputField registerUsername;
 	public InputField registerPassword;
+	public GameObject dataManager;
 	public string screenShotURL= "http://lightnarcissus.com/projects/barterfriend/cgi-bin/upload.cgitrangecreatures/cgi-bin/upload.cgi";
 	private int loginState = 0;
 
