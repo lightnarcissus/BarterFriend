@@ -23,11 +23,15 @@ public class LoginManager : MonoBehaviour {
 	public string screenShotURL= "http://lightnarcissus.com/projects/barterfriend/cgi-bin/upload.cgitrangecreatures/cgi-bin/upload.cgi";
 	private int loginState = 0;
 
+	public GameObject stateManager;
+
+	private GameObject listIP;
 	// Use this for initialization
 	void Start () {
 		loginState = 1;
 		registerPage.SetActive (false);
 		loginPage.SetActive (true);
+		listIP = ListIP.selfIP;
 	
 	}
 	
@@ -39,7 +43,8 @@ public class LoginManager : MonoBehaviour {
 
 	public void LoginUser()
 	{
-		Application.LoadLevel ("RequestMenu");
+		stateManager.GetComponent<StateManager> ().SwitchLevel (2);
+		//Application.LoadLevel ("RequestMenu");
 	}
 
 	public void MakeUserRegister()

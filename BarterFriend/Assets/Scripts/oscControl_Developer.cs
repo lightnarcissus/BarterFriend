@@ -30,7 +30,7 @@ public class oscControl_Developer : MonoBehaviour {
 	
 	private Dictionary<string, ServerLog> servers;
 
-
+	public GameObject reqFeed;
 	public string requestTitle;
 	public int requestOptions;
 	public string requestDesc;
@@ -52,7 +52,8 @@ public class oscControl_Developer : MonoBehaviour {
 	void Update() {
 		OSCHandler_Developer.Instance.UpdateLogs();
 		servers = OSCHandler_Developer.Instance.Servers;
-		
+		OSCHandler_Developer.Instance.SendMessageToClient ("Max", "/ReqTitle", "nice");
+		OSCHandler_Developer.Instance.SendMessageToClient ("Max", "/ReqOptions", 1);
 	    foreach( KeyValuePair<string, ServerLog> item in servers )
 		{
 			// If we have received at least one packet,
@@ -118,8 +119,8 @@ public class oscControl_Developer : MonoBehaviour {
 						friendsOnly = true;
 				}
 
-				GameObject tempObj = GameObject.Find ("Req1");
-				tempObj.GetComponent<ReqPanelManager> ().SendRequest (requestTitle, requestOptions, requestDesc, hasCall, hasPerson, hasVideo, hasText, friendsOnly);
+			//	GameObject tempObj = GameObject.Find ("Req1");
+				reqFeed.GetComponent<RequestFeed>().ReceiveRequest (requestTitle, requestOptions, requestDesc, hasCall, hasPerson, hasVideo, hasText, friendsOnly);
 
 			}
 		}

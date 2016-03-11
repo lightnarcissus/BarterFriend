@@ -20,6 +20,13 @@ public class RequestPageManager : MonoBehaviour {
 	public string savepath;
 	public float localBestScore;
 	public Text bestScoreText;
+	private GameObject listIP;
+
+	public GameObject stateManager;
+	public GameObject myReqPanel;
+	public Vector3 reqPos;
+	private GameObject tempPanel;
+	public GameObject reqMenu;
 	// Use this for initialization
 	void Start () {
 		DontDestroyOnLoad (gameObject);
@@ -30,6 +37,8 @@ public class RequestPageManager : MonoBehaviour {
 		}
 
 		Load ();
+
+		listIP = ListIP.selfIP;
 	}
 	
 	// Update is called once per frame
@@ -54,7 +63,12 @@ public class RequestPageManager : MonoBehaviour {
 		data.onlyFriends = friendsOnly.isOn;
 		bf.Serialize (file, data);
 		file.Close ();
-		Application.LoadLevel ("RequestMenu");
+		stateManager.GetComponent<StateManager> ().SwitchLevel (4);
+	//	Application.LoadLevel ("RequestMenu");
+		tempPanel=Instantiate(myReqPanel,reqPos,Quaternion.identity)as GameObject;
+		tempPanel.GetComponent<ReqPanelManager>().SendRequest(data.reqTitle,data.reqType,data.reqDesc,data.needCall,data.needPerson,data.needVideo,data.needText,data.onlyFriends);
+		tempPanel.transform.parent = reqMenu.transform;
+		tempPanel.GetComponent<RectTransform> ().localPosition = reqPos;
 		oscControl_Developer.SendRequest (data.reqTitle,data.reqType,data.reqDesc,data.needCall,data.needPerson,data.needVideo,data.needText,data.onlyFriends);
 	}
 

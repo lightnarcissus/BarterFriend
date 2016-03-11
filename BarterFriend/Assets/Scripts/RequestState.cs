@@ -7,9 +7,12 @@ using System.Collections;
 public class RequestState:MonoBehaviour {
 	public WWW www;
 	public GameObject quad;
+	private GameObject listIP;
+	public GameObject stateManager;
 	void Start() {
 		//StartCoroutine(GetText());
 		//www=new WWW("http://lightnarcissus.com/wp-content/uploads/2015/10/trialogue_paintitblack-1024x573.png");
+		listIP=ListIP.selfIP;
 	}
 
 	void Update()
@@ -18,9 +21,9 @@ public class RequestState:MonoBehaviour {
 		//Debug.Log (www.text);
 	}
 
-	public static void ReceiveRequest()
+	public void ReceiveRequest()
 	{
-		
+		//stateManager.GetComponent<StateManager> ().SwitchLevel (3);
 	}
 	
 	IEnumerator GetText() {

@@ -101,13 +101,14 @@ public class OSCHandler_Developer : MonoBehaviour
 			ListIP.otherIPAddress = "127.0.0.1";
 		}
 
-	//	CreateClient("Max", IPAddress.Parse(ListIP.ipAddress), 8001);
+		CreateClient("Max", IPAddress.Parse(ListIP.ipAddress),9000);
+		Debug.Log ("client created at:" + ListIP.ipAddress);
 			//CreateClient("Max", IPAddress.Parse(ListIP.ipAddress), 8000);
 		//CreateClient ("Critic", IPAddress.Parse (ListIP.otherIPAddress), 8000);
         //Initialize OSC servers (listeners)
         //Example:
 
-		CreateServer("iPhone", 8001);
+		CreateServer("iPhone", 8000);
 	}
 	
 	#region Properties
