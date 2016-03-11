@@ -27,6 +27,7 @@ public class RequestPageManager : MonoBehaviour {
 	public Vector3 reqPos;
 	private GameObject tempPanel;
 	public GameObject reqMenu;
+	public GameObject timeDetails;
 	// Use this for initialization
 	void Start () {
 		DontDestroyOnLoad (gameObject);
@@ -35,24 +36,30 @@ public class RequestPageManager : MonoBehaviour {
 		} else {
 			savepath = Application.dataPath;
 		}
+		timeDetails.SetActive (false);
 
-		Load ();
+	//	Load ();
 
 		listIP = ListIP.selfIP;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+		if (person.isOn) {
+			timeDetails.SetActive (true);
+		}
 	
 	}
 
 	public void SubmitRequest()
 	{
-		BinaryFormatter bf = new BinaryFormatter ();
-		FileStream file = File.Create	 (Application.persistentDataPath + "/playerInfo.dat");
+	//	BinaryFormatter bf = new BinaryFormatter ();
+	//	FileStream file = File.Create	 (Application.persistentDataPath + "/playerInfo.dat");
 
 		PlayerData data = new PlayerData ();
 		//Debug.Log ("saved with: " + localBestScore);
+		Debug.Log("person "+ person.isOn);
 		data.reqTitle = reqTitle.text;
 		data.reqType = reqType.value;
 		data.reqDesc = reqDescription.text;
@@ -61,15 +68,18 @@ public class RequestPageManager : MonoBehaviour {
 		data.needVideo = video.isOn;
 		data.needText = text.isOn;
 		data.onlyFriends = friendsOnly.isOn;
-		bf.Serialize (file, data);
-		file.Close ();
-		stateManager.GetComponent<StateManager> ().SwitchLevel (4);
+//		bf.Serialize (file, data);
+	//	file.Close ();
 	//	Application.LoadLevel ("RequestMenu");
 		tempPanel=Instantiate(myReqPanel,reqPos,Quaternion.identity)as GameObject;
-		tempPanel.GetComponent<ReqPanelManager>().SendRequest(data.reqTitle,data.reqType,data.reqDesc,data.needCall,data.needPerson,data.needVideo,data.needText,data.onlyFriends);
+		Debug.Log("person "+ person.isOn);
+		Debug.Log("video "+ video.isOn);
+		tempPanel.GetComponent<ReqPanelManager>().SendRequest(data.reqTitle,data.reqType,data.reqDesc,data.needCall,person.isOn,video.isOn,data.needText,data.onlyFriends);
 		tempPanel.transform.parent = reqMenu.transform;
 		tempPanel.GetComponent<RectTransform> ().localPosition = reqPos;
+		tempPanel.GetComponent<RectTransform> ().localScale = new Vector3 (0.73f, 0.73f, 0.73f);
 		oscControl_Developer.SendRequest (data.reqTitle,data.reqType,data.reqDesc,data.needCall,data.needPerson,data.needVideo,data.needText,data.onlyFriends);
+		stateManager.GetComponent<StateManager> ().SwitchLevel (4);
 	}
 
 
@@ -116,7 +126,7 @@ public class RequestPageManager : MonoBehaviour {
 		}
 
 
-		[Serializable]
+		
 		class PlayerData
 		{
 		public string reqTitle;
